@@ -24,10 +24,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build PHP image
+      - name: Build PHP 7 image
         run: |
           docker build . --file ./php/7.4/cli/Dockerfile --tag $PHP_IMAGE_NAME:$PHP7_VERSION-cli
           docker build . --file ./php/7.4/fpm/Dockerfile --tag $PHP_IMAGE_NAME:$PHP7_VERSION-fpm
+      
+      - name: Build PHP 8 image
+        run: |
+          docker build . --file ./php/8.0/cli/Dockerfile --tag $PHP_IMAGE_NAME:$PHP8_VERSION-cli
+          docker build . --file ./php/8.0/fpm/Dockerfile --tag $PHP_IMAGE_NAME:$PHP8_VERSION-fpm
 
       - name: Log into registry
         run: echo "${{ secrets.DOCKER_REGISTRY_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_REGISTRY_USERNAME }} --password-stdin
