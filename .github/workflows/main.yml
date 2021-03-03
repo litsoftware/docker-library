@@ -39,4 +39,8 @@ jobs:
 
       - name: Push image
         run: |
-          docker push
+          docker push $PHP_IMAGE_NAME:$PHP7_VERSION-cli
+          docker push $PHP_IMAGE_NAME:$PHP7_VERSION-fpm
+          
+          docker push $PHP_IMAGE_NAME:$PHP8_VERSION-cli
+          docker push $PHP_IMAGE_NAME:$PHP8_VERSION-fpm
