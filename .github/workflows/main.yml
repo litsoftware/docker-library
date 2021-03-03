@@ -15,7 +15,7 @@ env:
   PHP7_VERSION: 7.4
   PHP8_VERSION: 8.0
 
-  PHP_IMAGE_NAME: 'php'
+  PHP_IMAGE_NAME: 'litsoftware/php'
 
 jobs:
   build:
@@ -41,6 +41,6 @@ jobs:
         run: |
           docker push $PHP_IMAGE_NAME:$PHP7_VERSION-cli
           docker push $PHP_IMAGE_NAME:$PHP7_VERSION-fpm
-          
+
           docker push $PHP_IMAGE_NAME:$PHP8_VERSION-cli
           docker push $PHP_IMAGE_NAME:$PHP8_VERSION-fpm
