@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd tokenizer sockets xmlrpc shmop sysvsem soap opcache \
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd tokenizer sockets shmop sysvsem soap opcache \
     && pecl install mongodb \
     igbinary \
     redis \
