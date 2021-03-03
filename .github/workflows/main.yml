@@ -1,0 +1,37 @@
+name: build images
+
+on:
+  push:
+    branches:
+      - main
+      - development
+  pull_request:
+    branches:
+      - main
+    tags:
+      - v*
+
+env:
+  PHP7_VERSION: 7.4
+  PHP8_VERSION: 8.0
+
+  PHP_IMAGE_NAME: 'php'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build PHP image
+        run: |
+          docker build . --file ./php/7.4/cli/Dockerfile --tag $PHP_IMAGE_NAME:$PHP7_VERSION-cli
+          docker build . --file ./php/7.4/fpm/Dockerfile --tag $PHP_IMAGE_NAME:$PHP7_VERSION-fpm
+
+      - name: Log into registry
+        run: echo "${{ secrets.DOCKER_REGISTRY_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_REGISTRY_USERNAME }} --password-stdin
+
+      - name: Push image
+        run: |
+          docker push
