@@ -19,7 +19,7 @@ env:
   PHP_IMAGE_NAME: 'litsoftware/php'
 
 jobs:
-  build:
+  build_php_7:
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
     steps:
@@ -33,11 +33,6 @@ jobs:
           docker build . --file ./php/7.4/cli/Dockerfile --tag $PHP_IMAGE_NAME:$PHP74_VERSION-cli
           docker build . --file ./php/7.4/fpm/Dockerfile --tag $PHP_IMAGE_NAME:$PHP74_VERSION-fpm
       
-      - name: Build PHP 8 image
-        run: |
-          docker build . --file ./php/8.0/cli/Dockerfile --tag $PHP_IMAGE_NAME:$PHP8_VERSION-cli
-          docker build . --file ./php/8.0/fpm/Dockerfile --tag $PHP_IMAGE_NAME:$PHP8_VERSION-fpm
-
       - name: Log into registry
         run: echo "${{ secrets.DOCKER_REGISTRY_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_REGISTRY_USERNAME }} --password-stdin
 
@@ -48,6 +43,22 @@ jobs:
 
           docker push $PHP_IMAGE_NAME:$PHP74_VERSION-cli
           docker push $PHP_IMAGE_NAME:$PHP74_VERSION-fpm
-          
+
+  build_php_8:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build PHP 8 image
+        run: |
+          docker build . --file ./php/8.0/cli/Dockerfile --tag $PHP_IMAGE_NAME:$PHP8_VERSION-cli
+          docker build . --file ./php/8.0/fpm/Dockerfile --tag $PHP_IMAGE_NAME:$PHP8_VERSION-fpm
+
+      - name: Log into registry
+        run: echo "${{ secrets.DOCKER_REGISTRY_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_REGISTRY_USERNAME }} --password-stdin
+
+      - name: Push image
+        run: |
           docker push $PHP_IMAGE_NAME:$PHP8_VERSION-cli
           docker push $PHP_IMAGE_NAME:$PHP8_VERSION-fpm
