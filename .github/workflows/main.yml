@@ -12,7 +12,8 @@ on:
       - v*
 
 env:
-  PHP7_VERSION: 7.4
+  PHP71_VERSION: 7.1
+  PHP74_VERSION: 7.4
   PHP8_VERSION: 8.0
 
   PHP_IMAGE_NAME: 'litsoftware/php'
@@ -26,8 +27,11 @@ jobs:
 
       - name: Build PHP 7 image
         run: |
-          docker build . --file ./php/7.4/cli/Dockerfile --tag $PHP_IMAGE_NAME:$PHP7_VERSION-cli
-          docker build . --file ./php/7.4/fpm/Dockerfile --tag $PHP_IMAGE_NAME:$PHP7_VERSION-fpm
+          docker build . --file ./php/7.1/cli/Dockerfile --tag $PHP_IMAGE_NAME:$PHP71_VERSION-cli
+          docker build . --file ./php/7.1/fpm/Dockerfile --tag $PHP_IMAGE_NAME:$PHP71_VERSION-fpm
+
+          docker build . --file ./php/7.4/cli/Dockerfile --tag $PHP_IMAGE_NAME:$PHP74_VERSION-cli
+          docker build . --file ./php/7.4/fpm/Dockerfile --tag $PHP_IMAGE_NAME:$PHP74_VERSION-fpm
       
       - name: Build PHP 8 image
         run: |
@@ -39,7 +43,11 @@ jobs:
 
       - name: Push image
         run: |
-          docker push $PHP_IMAGE_NAME:$PHP7_VERSION-cli
-          docker push $PHP_IMAGE_NAME:$PHP7_VERSION-fpm
+          docker push $PHP_IMAGE_NAME:$PHP71_VERSION-cli
+          docker push $PHP_IMAGE_NAME:$PHP71_VERSION-fpm
+
+          docker push $PHP_IMAGE_NAME:$PHP74_VERSION-cli
+          docker push $PHP_IMAGE_NAME:$PHP74_VERSION-fpm
+          
           docker push $PHP_IMAGE_NAME:$PHP8_VERSION-cli
           docker push $PHP_IMAGE_NAME:$PHP8_VERSION-fpm
