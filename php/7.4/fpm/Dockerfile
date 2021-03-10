@@ -11,7 +11,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip
 
 #install some base extensions
-RUN pecl install zip && \
+RUN apt-get install libzip-dev && \
+    pecl install zip && \
     docker-php-ext-enable zip
 
 # Clear cache
