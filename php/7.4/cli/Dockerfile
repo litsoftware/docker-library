@@ -22,6 +22,12 @@ RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd tokenizer soc
     mongodb \
     igbinary 
 
+#install some base extensions
+RUN apt-get install -y \
+    libzip-dev \
+    zip \
+    && docker-php-ext-install zip
+
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
