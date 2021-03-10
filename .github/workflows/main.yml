@@ -21,7 +21,7 @@ env:
 
 jobs:
   build_php_71:
-    runs-on: ubuntu-latest
+    runs-on: Ubuntu-20.04
     if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v2
@@ -40,7 +40,7 @@ jobs:
           docker push $PHP_IMAGE_NAME:$PHP71_VERSION-fpm
 
   build_php_74:
-    runs-on: ubuntu-latest
+    runs-on: Ubuntu-20.04
     if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v2
@@ -59,7 +59,7 @@ jobs:
           docker push $PHP_IMAGE_NAME:$PHP74_VERSION-fpm
 
   build_php_8:
-    runs-on: ubuntu-latest
+    runs-on: Ubuntu-20.04
     if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v2
