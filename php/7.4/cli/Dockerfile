@@ -10,6 +10,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     zip \
     unzip
 
+#install some base extensions
+RUN apt-get install -t focal libzip5 libzip-dev \
+    && docker-php-ext-install zip
+
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -21,12 +25,6 @@ RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd tokenizer soc
     && docker-php-ext-enable redis \
     mongodb \
     igbinary 
-
-#install some base extensions
-RUN apt-get install -y \
-    libzip-dev \
-    zip \
-    && docker-php-ext-install zip
 
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
