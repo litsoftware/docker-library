@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip
 
 #install some base extensions
-RUN apt-get install -y libzip5 libzip-dev \
+RUN apt-get install -y libzip libzip-dev \
     && docker-php-ext-configure zip --with-libzip \
     && docker-php-ext-install zip
 
