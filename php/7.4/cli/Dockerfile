@@ -11,8 +11,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip
 
 #install some base extensions
-RUN apt-get install -t focal libzip5 libzip-dev \
-    && docker-php-ext-install zip
+RUN pecl install zip && \
+    docker-php-ext-enable zip
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
