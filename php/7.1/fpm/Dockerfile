@@ -1,5 +1,7 @@
 FROM php:7.1-fpm
 
+RUN apt autoremove -y
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
@@ -8,11 +10,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libonig-dev \
     libxml2-dev \
     zip \
-    unzip
+    unzip \
+    libzip-dev
 
 #install some base extensions
-RUN apt-get install libzip-dev && \
-    pecl install zip && \
+RUN pecl install zip && \
     docker-php-ext-enable zip
 
 # Clear cache
