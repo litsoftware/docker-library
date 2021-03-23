@@ -1,14 +1,9 @@
 FROM php:8.0-cli
 
-# Install freetype
-RUN wget "http://download.savannah.gnu.org/releases/freetype/freetype-2.10.0.tar.bz2" && \
-    tar jxvf freetype-2.10.0.tar.bz2 && \
-    cd freetype-2.10.0 && \
-    ./configure --prefix=/usr/local/freetype && make && make install
-
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
+    wget \
     curl \
     libpng-dev \
     libonig-dev \
@@ -21,6 +16,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libjpeg62-turbo-dev \
     libxpm-dev \
     libfreetype6-dev
+
+# Install freetype
+RUN wget "https://download.savannah.gnu.org/releases/freetype/freetype-2.10.0.tar.bz2" && \
+    tar jxvf freetype-2.10.0.tar.bz2 && \
+    cd freetype-2.10.0 && \
+    ./configure --prefix=/usr/local/freetype && make && make install
 
 RUN docker-php-ext-configure gd \
     --with-gd \
