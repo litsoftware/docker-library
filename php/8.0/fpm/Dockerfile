@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     curl \
     libpng-dev \
+    libwebp-dev \
     libonig-dev \
     libxml2-dev \
     zip \
