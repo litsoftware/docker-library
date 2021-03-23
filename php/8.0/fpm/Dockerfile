@@ -7,14 +7,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     libpng-dev \
     libwebp-dev \
+    libjpeg62-turbo-dev \
     libonig-dev \
     libxml2-dev \
     zip \
     unzip \
     libzip-dev \
     libmcrypt-dev \
-    libwebp-dev \
-    libjpeg62-turbo-dev \
     libxpm-dev \
     libfreetype6-dev
 

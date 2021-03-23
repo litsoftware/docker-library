@@ -7,12 +7,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     libpng-dev \
     libwebp-dev \
+    libjpeg62-turbo-dev \
     libonig-dev \
     libxml2-dev \
     zip \
     unzip \
     libzip-dev \
-    libmcrypt-dev
+    libmcrypt-dev \
+    libxpm-dev \
+    libfreetype6-dev
 
 RUN set -eux; \
     docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp; \
