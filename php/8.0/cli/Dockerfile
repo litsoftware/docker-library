@@ -27,10 +27,6 @@ RUN docker-php-ext-configure gd \
     --with-gd \
     --with-webp-dir \
     --with-freetype=/usr/local/freetype \
-    --with-png-dir \
-    --with-zlib-dir \
-    --with-xpm-dir \
-    --with-freetype-dir \
     --enable-gd-native-ttf
 
 RUN pecl install zip && \
@@ -42,7 +38,7 @@ RUN pecl install zip && \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd tokenizer sockets shmop sysvsem soap opcache \
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath tokenizer sockets shmop sysvsem soap opcache \
     && pecl install mongodb \
     igbinary \
     redis \
