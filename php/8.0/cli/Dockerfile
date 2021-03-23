@@ -11,13 +11,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     zip \
     unzip \
     libzip-dev \
-    libmcrypt-dev \
-    libwebp-dev \
-    libjpeg62-turbo-dev \
-    libxpm-dev \
-    libfreetype6-dev
+    libmcrypt-de
 
-RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp
+RUN set -eux; \
+    docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp; \
+    docker-php-ext-configure intl; \
+    docker-php-ext-configure mysqli --with-mysqli=mysqlnd; \
+    docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd; \
+    docker-php-ext-configure zip; \
+    docker-php-ext-install -j "$(nproc)" \
+    gd \
+    intl \
+    mysqli \
+    opcache \
+    pdo_mysql \
+    zip
 
 RUN pecl install zip && \
     docker-php-ext-enable zip && \
@@ -28,7 +36,7 @@ RUN pecl install zip && \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo_mysql gd mbstring exif pcntl bcmath tokenizer sockets shmop sysvsem soap opcache \
+RUN docker-php-ext-install mbstring exif pcntl bcmath tokenizer sockets shmop sysvsem soap opcache \
     && pecl install mongodb \
     igbinary \
     redis \
