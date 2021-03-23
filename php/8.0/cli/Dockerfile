@@ -26,8 +26,7 @@ RUN wget "https://download.savannah.gnu.org/releases/freetype/freetype-2.10.0.ta
 RUN docker-php-ext-configure gd \
     --with-gd \
     --with-webp-dir \
-    --with-freetype=/usr/local/freetype \
-    --enable-gd-native-ttf
+    --with-freetype=/usr/local/freetype 
 
 RUN pecl install zip && \
     docker-php-ext-enable zip && \
