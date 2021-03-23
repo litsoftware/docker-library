@@ -17,12 +17,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxpm-dev \
     libfreetype6-dev
 
-# Install freetype
-RUN wget "https://download.savannah.gnu.org/releases/freetype/freetype-2.10.0.tar.bz2" && \
-    tar jxvf freetype-2.10.0.tar.bz2 && \
-    cd freetype-2.10.0 && \
-    ./configure --prefix=/usr/local/freetype && make && make install
-
 RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp
 
 RUN pecl install zip && \
@@ -34,7 +28,7 @@ RUN pecl install zip && \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath tokenizer sockets shmop sysvsem soap opcache \
+RUN docker-php-ext-install pdo_mysql gd mbstring exif pcntl bcmath tokenizer sockets shmop sysvsem soap opcache \
     && pecl install mongodb \
     igbinary \
     redis \

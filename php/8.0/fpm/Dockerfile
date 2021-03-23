@@ -3,6 +3,7 @@ FROM php:8.0-fpm
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
+    wget \
     curl \
     libpng-dev \
     libonig-dev \
@@ -10,7 +11,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     zip \
     unzip \
     libzip-dev \
-    libmcrypt-dev
+    libmcrypt-dev \
+    libwebp-dev \
+    libjpeg62-turbo-dev \
+    libxpm-dev \
+    libfreetype6-dev
+
+RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp
 
 RUN pecl install zip && \
     docker-php-ext-enable zip && \
