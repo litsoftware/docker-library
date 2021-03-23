@@ -3,22 +3,33 @@ FROM php:7.4-cli
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
-    curl \
     wget \
+    curl \
     libpng-dev \
+    libwebp-dev \
+    libjpeg62-turbo-dev \
     libonig-dev \
     libxml2-dev \
     zip \
     unzip \
     libzip-dev \
     libmcrypt-dev \
-    libwebp-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev \ 
     libxpm-dev \
     libfreetype6-dev
 
-RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp
+RUN set -eux; \
+    docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp; \
+    docker-php-ext-configure intl; \
+    docker-php-ext-configure mysqli --with-mysqli=mysqlnd; \
+    docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd; \
+    docker-php-ext-configure zip; \
+    docker-php-ext-install -j "$(nproc)" \
+    gd \
+    intl \
+    mysqli \
+    opcache \
+    pdo_mysql \
+    zip
 
 RUN pecl install zip && \
     docker-php-ext-enable zip && \
