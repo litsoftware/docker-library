@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     zip \
     unzip \
     libzip-dev \
-    libmcrypt-de
+    libmcrypt-dev
 
 RUN set -eux; \
     docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp; \
