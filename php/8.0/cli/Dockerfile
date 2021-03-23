@@ -1,5 +1,11 @@
 FROM php:8.0-cli
 
+# Install freetype
+RUN wget "http://download.savannah.gnu.org/releases/freetype/freetype-2.10.0.tar.bz2" && \
+    tar jxvf freetype-2.10.0.tar.bz2 && \
+    cd freetype-2.10.0 && \
+    ./configure --prefix=/usr/local/freetype && make && make install
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
@@ -10,7 +16,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     zip \
     unzip \
     libzip-dev \
-    libmcrypt-dev
+    libmcrypt-dev \
+    libwebp-dev \
+    libjpeg62-turbo-dev \
+    libxpm-dev \
+    libfreetype6-dev
+
+RUN docker-php-ext-configure gd \
+    --with-gd \
+    --with-webp-dir \
+    --with-freetype=/usr/local/freetype \
+    --with-png-dir \
+    --with-zlib-dir \
+    --with-xpm-dir \
+    --with-freetype-dir \
+    --enable-gd-native-ttf
 
 RUN pecl install zip && \
     docker-php-ext-enable zip && \
