@@ -2,6 +2,9 @@ FROM nginx:latest
 
 RUN addgroup nobody tty
 
+RUN chgrp -R 0 /etc/nginx/ /var/cache/nginx /var/run /var/log/nginx  && \ 
+    chmod -R g+rwX /etc/nginx/ /var/cache/nginx /var/run /var/log/nginx
+
 # Install latest su-exec
 RUN  set -ex; \
     \
