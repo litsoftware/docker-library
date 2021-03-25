@@ -27,7 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build PHP 7 image
+      - name: Build nginx image
         run: |
           docker build . --file ./nginx/latest/Dockerfile --tag $NGINX_IMAGE_NAME:latest
       
