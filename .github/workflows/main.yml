@@ -18,8 +18,27 @@ env:
   PHP8_VERSION: 8.0
 
   PHP_IMAGE_NAME: 'litsoftware/php'
+  NGINX_IMAGE_NAME: 'litsoftware/nginx'
 
 jobs:
+  build_nginx:
+    runs-on: Ubuntu-20.04
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build PHP 7 image
+        run: |
+          docker build . --file ./nginx/latest/Dockerfile --tag $NGINX_IMAGE_NAME:latest
+      
+      - name: Log into registry
+        run: echo "${{ secrets.DOCKER_REGISTRY_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_REGISTRY_USERNAME }} --password-stdin
+
+      - name: Push image
+        run: |
+          docker push $PHP_IMAGE_NAME:$PHP71_VERSION-cli
+          docker push $PHP_IMAGE_NAME:$PHP71_VERSION-fpm
+
   build_php_71:
     runs-on: Ubuntu-20.04
     if: github.event_name == 'push'
