@@ -36,8 +36,7 @@ jobs:
 
       - name: Push image
         run: |
-          docker push $PHP_IMAGE_NAME:$PHP71_VERSION-cli
-          docker push $PHP_IMAGE_NAME:$PHP71_VERSION-fpm
+          docker push $NGINX_IMAGE_NAME:latest
 
   build_php_71:
     runs-on: Ubuntu-20.04
