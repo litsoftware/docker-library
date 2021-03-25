@@ -19,4 +19,4 @@ RUN  set -ex; \
     \
     apt-get purge -y --auto-remove $fetch_deps
 
-CMD [ "su-exec", "nobody", "nginx", "-g", "daemon off;"]
+# CMD [ "su-exec", "nobody", "nginx", "-g", "daemon off;"]
