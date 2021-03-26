@@ -22,4 +22,6 @@ RUN  set -ex; \
     \
     apt-get purge -y --auto-remove $fetch_deps
 
+COPY ./conf/site.conf /etc/nginx/conf.d/site.conf
+
 # CMD [ "su-exec", "nobody", "nginx", "-g", "daemon off;"]
